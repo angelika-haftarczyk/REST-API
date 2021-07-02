@@ -52,5 +52,11 @@ public class MockBookService implements BookService {
         }
     }
 
-
+    @Override
+    public void delete(Long id) {
+        Book findBook = getBook(id);
+        if (findBook != null){
+            books.remove(findBook);
+        }
+    }
 }
