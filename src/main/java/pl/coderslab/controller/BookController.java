@@ -3,6 +3,7 @@ package pl.coderslab.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.model.Book;
+import pl.coderslab.service.BookService;
 import pl.coderslab.service.MockBookService;
 
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.List;
 public class BookController {
 
     @Autowired
-    private MockBookService mockBookService;
+    private BookService bookService;
 
     @RequestMapping(value = "/helloBook", method = RequestMethod.GET)
     public Book helloBook() {
@@ -23,13 +24,25 @@ public class BookController {
 
     @GetMapping(value = "")
     public List<Book> getBooks(){
-        return mockBookService.getBooks();
+        return bookService.getBooks();
     }
 
-    @PostMapping("")
-    public void addBook(@RequestBody Book book){
-        mockBookService.add(book);
+    @GetMapping(value = "/{id}")
+    public Book getBooks(@PathVariable Long id){
+        return bookService.getBook(id);
     }
+
+    @PostMapping(value = "")
+    public void addBook(@RequestBody Book book){
+        bookService.add(book);
+    }
+
+    @PutMapping("")
+    public void updateBook(@RequestBody Book book){
+        bookService.update(book);
+    }
+
+
 
 
 

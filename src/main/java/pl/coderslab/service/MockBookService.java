@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class MockBookService {
+public class MockBookService implements BookService {
 
     private List<Book> books;
     private static Long nextId = 1L;
@@ -21,12 +21,36 @@ public class MockBookService {
                 "programming"));
     }
 
+    @Override
     public List<Book> getBooks() {
         return books;
     }
 
+    @Override
     public void add(Book book) {
         book.setId(nextId++);
         books.add(book);
     }
+
+    @Override
+    public Book getBook(Long id) {
+        return books.stream()
+                .filter(book -> book.getId().equals(id))
+                .findAny()
+                .orElse(null);
+    }
+
+    @Override
+    public void update(Book book) {
+        Book savedBook = getBook(book.getId());
+        if(savedBook != null) {
+            savedBook.setAuthor(book.getAuthor());
+            savedBook.setIsbn(book.getIsbn());
+            savedBook.setPublisher(book.getPublisher());
+            savedBook.setTitle(book.getTitle());
+            savedBook.setType(book.getType());
+        }
+    }
+
+
 }

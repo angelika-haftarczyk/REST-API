@@ -8,6 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
+@NoArgsConstructor
 
 public class Book {
     private Long id;
